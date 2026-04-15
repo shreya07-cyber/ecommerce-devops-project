@@ -9,25 +9,26 @@ pipeline {
         }
 
         stage('Install Dependencies') {
-    steps {
-        sh '''
-        python3 -m venv venv
-        . venv/bin/activate
-        pip install --upgrade pip
-        pip install -r requirements.txt
-        '''
-    }
-}
+            steps {
+                sh '''
+                    python3 -m venv venv
+                    . venv/bin/activate
+                    pip install --upgrade pip
+                    pip install -r requirements.txt
+                '''
+            }
+        }
 
-stage('Run Tests') {
-    steps {
-        sh '''
-            . venv/bin/activate
-            export PYTHONPATH=$PWD
-            pytest --junitxml=report.xml
-        '''
-    }
-}
+        stage('Run Tests') {
+            steps {
+                sh '''
+                    . venv/bin/activate
+                    export PYTHONPATH=$PWD
+                    pytest --junitxml=report.xml
+                '''
+            }
+        }
+
         stage('Build Docker Image') {
             steps {
                 sh 'docker build -t ecommerce-flask .'
@@ -37,16 +38,17 @@ stage('Run Tests') {
         stage('Deploy Container') {
             steps {
                 sh '''
-                docker stop ecommerce-container || true
-                docker rm ecommerce-container || true
-                docker run -d --name ecommerce-container -p 5000:5000 ecommerce-flask
+                    docker stop ecommerce-container || true
+                    docker rm ecommerce-container || true
+                    docker run -d --name ecommerce-container -p 5000:5000 ecommerce-flask
                 '''
             }
         }
     }
-}
-post {
-    always {
-        junit 'report.xml'
+
+    post {
+        always {
+            junit 'report.xml'
+        }
     }
 }
