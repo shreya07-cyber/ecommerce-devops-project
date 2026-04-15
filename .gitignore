@@ -8,4 +8,11 @@ __pycache__/
 .idea/
 .vscode/
 testenv/
-README.md.save*
+.env
+*.egg-info/
+dist/
+build/
+.coverage
+coverage.xml
+report.xml
+htmlcov/
