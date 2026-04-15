@@ -21,14 +21,49 @@ The project is integrated with version control and will be enhanced with CI/CD p
 
 ---
 
-## 🛠️ Technologies Used
+## ⚙️ Project Architecture / Workflow
 
-* Python (Flask)
-* HTML
-* CSS
-* Git & GitHub
+### CI/CD Flow
+1. Developer pushes code to GitHub repository 
+2. Jenkins pulls the latest code from GitHub 
+3. Jenkins creates Python virtual environment and installs dependencies 
+4. Jenkins runs automated test cases using Pytest 
+5. Jenkins builds Docker image from Dockerfile 
+6. Jenkins deploys Docker container 
+7. Application becomes accessible on browser (`http://localhost:5000`)
 
----
+## 📂 Project Structure
+
+ecommerce-devops-project/
+│
+├── demo_ecommerce/
+│ ├── app.py
+│ ├── init.py
+│ ├── templates/
+│ └── static/
+│
+├── tests/
+│ └── test_app.py
+│
+├── Dockerfile
+├── Jenkinsfile
+├── requirements.txt
+├── README.md
+└── .gitignore
+
+
+## 🛠️ Tools and Technologies Used
+
+| Category         |   Tools                          |
+|------------------|----------------------------------|
+| Version Control  | Git, GitHub                      |
+| CI/CD Tool       | Jenkins                          |
+| Programming      | Python 3, Flask                  |
+| Testing          | Pytest                           |
+| Containerization | Docker                           |
+| OS/Platform      | WSL Ubuntu (Windows)             |
+| Deployment       | Docker Container (Staging/Local) |
+
 
 ## 📁 Project Structure
 
@@ -102,3 +137,7 @@ demo_ecommerce/
 * Deploy application on cloud platform
 
 ---
+cd ~/ecommerce-devops-project
+nano README.mdcd ~/ecommerce-devops-project
+nano README.mdcd ~/ecommerce-devops-project
+nano README.md
