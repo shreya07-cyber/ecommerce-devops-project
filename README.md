@@ -1,143 +1,180 @@
-# 🛒 E-commerce DevOps Project
+# 🛒 E-Commerce DevOps Project
+
+![CI/CD](https://github.com/tejalkunde/ecommerce-devops-project/actions/workflows/ci-cd.yml/badge.svg)
 
 ## 📌 Project Description
 
-This project is a Flask-based e-commerce web application developed to demonstrate the implementation of DevOps practices. The application includes multiple user interfaces such as product browsing, cart management, login/signup, and checkout functionality.
+A Flask-based e-commerce web application that demonstrates a **complete DevOps CI/CD pipeline** including version control, automated builds, testing, static code analysis, containerisation, and cloud deployment.
 
-The project is integrated with version control and will be enhanced with CI/CD pipelines to automate testing, building, and deployment processes.
+**Live URL:** https://ecommerce-devops-project.onrender.com
 
 ---
 
 ## 🚀 Features
 
-* User authentication (Login & Signup)
-* Product listing and details page
-* Search functionality
-* Shopping cart system
-* Checkout process
-* Order success confirmation
-* Contact page
-* Responsive UI using HTML & CSS
+- User authentication (Login & Signup with validation)
+- Product listing and product detail pages
+- Search functionality
+- Shopping cart (add / remove items)
+- Checkout with order confirmation
+- Contact page
+- Responsive UI with HTML & CSS
 
 ---
 
-## ⚙️ Project Architecture / Workflow
+## ⚙️ CI/CD Pipeline Architecture
 
-### CI/CD Flow
-1. Developer pushes code to GitHub repository 
-2. Jenkins pulls the latest code from GitHub 
-3. Jenkins creates Python virtual environment and installs dependencies 
-4. Jenkins runs automated test cases using Pytest 
-5. Jenkins builds Docker image from Dockerfile 
-6. Jenkins deploys Docker container 
-7. Application becomes accessible on browser (`http://localhost:5000`)
+```
+Developer Push (GitHub)
+        │
+        ▼
+GitHub Actions Triggered
+        │
+        ├── Job 1: Build & Test
+        │       ├── Install dependencies
+        │       ├── Run Flake8 (Static Code Analysis)
+        │       ├── Run Pytest + Coverage Report
+        │       └── Upload test artifacts
+        │
+        ├── Job 2: Docker Build
+        │       ├── Build Docker image
+        │       └── Smoke test container
+        │
+        └── Job 3: Deploy to Render (on main push only)
+                └── Trigger Render deploy hook
+```
+
+---
+
+## 🛠️ Tools & Technologies
+
+| Category            | Tool / Technology        |
+|---------------------|--------------------------|
+| Version Control     | Git, GitHub              |
+| CI/CD               | GitHub Actions           |
+| Programming         | Python 3.10, Flask       |
+| Testing             | Pytest, pytest-cov       |
+| Static Analysis     | Flake8                   |
+| Containerisation    | Docker                   |
+| Cloud Deployment    | Render.com               |
+| Build Tool          | pip, gunicorn            |
+
+---
 
 ## 📂 Project Structure
 
+```
 ecommerce-devops-project/
 │
+├── .github/
+│   └── workflows/
+│       └── ci-cd.yml          ← GitHub Actions CI/CD pipeline
+│
 ├── demo_ecommerce/
-│ ├── app.py
-│ ├── init.py
-│ ├── templates/
-│ └── static/
+│   ├── app.py                 ← Main Flask application
+│   ├── __init__.py
+│   ├── templates/             ← HTML templates
+│   └── static/style.css       ← Stylesheet
 │
 ├── tests/
-│ └── test_app.py
+│   └── test_app.py            ← Pytest test suite (35+ tests)
 │
-├── Dockerfile
-├── Jenkinsfile
-├── requirements.txt
-├── README.md
-└── .gitignore
-
-
-## 🛠️ Tools and Technologies Used
-
-| Category         |   Tools                          |
-|------------------|----------------------------------|
-| Version Control  | Git, GitHub                      |
-| CI/CD Tool       | Jenkins                          |
-| Programming      | Python 3, Flask                  |
-| Testing          | Pytest                           |
-| Containerization | Docker                           |
-| OS/Platform      | WSL Ubuntu (Windows)             |
-| Deployment       | Docker Container (Staging/Local) |
-
-
-## 📁 Project Structure
-
-demo_ecommerce/
-│
-├── app.py → Main Flask application
-├── requirements.txt → Python dependencies
-│
-├── static/
-│   └── style.css → Stylesheet
-│
-├── templates/
-│   ├── base.html → Base layout
-│   ├── home.html → Homepage
-│   ├── product.html → Product page
-│   ├── cart.html → Shopping cart
-│   ├── checkout.html → Checkout page
-│   ├── login.html → Login page
-│   ├── signup.html → Signup page
-│   ├── search.html → Search page
-│   ├── contact.html → Contact page
-│   └── order_success.html → Order confirmation page
-│
-├── venv/ → Virtual environment
+├── Dockerfile                 ← Docker containerisation
+├── render.yaml                ← Render cloud deploy config
+├── requirements.txt           ← Python dependencies
+├── pytest.ini                 ← Test configuration
+├── Jenkinsfile                ← Jenkins pipeline (alternative CI)
+├── .gitignore
+└── README.md
+```
 
 ---
 
-## 🔁 DevOps Implementation
+## ▶️ How to Run Locally
 
-* Version control using GitHub
-* Structured commits and branching strategy
-* CI/CD pipeline using GitHub Actions (to be implemented)
-* Automated workflow execution on every push
+```bash
+# 1. Clone the repository
+git clone https://github.com/tejalkunde/ecommerce-devops-project.git
+cd ecommerce-devops-project
+
+# 2. Create virtual environment and install dependencies
+python -m venv venv
+source venv/bin/activate        # Windows: venv\Scripts\activate
+pip install -r requirements.txt
+
+# 3. Run the application
+python demo_ecommerce/app.py
+
+# 4. Open in browser
+# http://127.0.0.1:5000
+```
 
 ---
 
-## ▶️ How to Run the Project
+## 🐳 Run with Docker
 
-1. Clone the repository:
-   git clone https://github.com/rutujanarode/ecommerce-devops-project.git
+```bash
+# Build the image
+docker build -t ecommerce-flask .
 
-2. Navigate to the project folder:
-   cd demo_ecommerce
+# Run the container
+docker run -d -p 5000:5000 --name ecommerce-container ecommerce-flask
 
-3. Install dependencies:
-   pip install -r requirements.txt
+# Open browser at http://localhost:5000
+```
 
-4. Run the application:
-   python app.py
+---
 
-5. Open in browser:
-   http://127.0.0.1:5000
+## 🧪 Run Tests
+
+```bash
+# Run all tests with coverage
+pytest tests/ --cov=demo_ecommerce --cov-report=term-missing -v
+
+# Run with XML report (for CI)
+pytest tests/ --junitxml=report.xml
+```
+
+---
+
+## 🔍 Static Code Analysis
+
+```bash
+flake8 demo_ecommerce/app.py tests/test_app.py --max-line-length=120
+```
+
+---
+
+## ☁️ Deployment (Render)
+
+1. Connect your GitHub repo to [render.com](https://render.com)
+2. Create a **Web Service**
+3. Set **Build Command:** `pip install -r requirements.txt`
+4. Set **Start Command:** `gunicorn demo_ecommerce.app:app --bind 0.0.0.0:$PORT`
+5. Add `RENDER_DEPLOY_HOOK_URL` as a GitHub secret for auto-deploy on push
+
+---
+
+## 🌿 Branching Strategy
+
+| Branch  | Purpose                          |
+|---------|----------------------------------|
+| `main`  | Production-ready, triggers deploy|
+| `dev`   | Development and feature testing  |
+
+Pull requests from `dev` → `main` trigger full CI pipeline before merge.
 
 ---
 
 ## 👥 Contributors
 
-* Rutuja Narode
-* Shreya Dubey
-* Tejal Kunde
-* Eshwari Borade
+- Tejal Kunde
+- Rutuja Narode
+- Shreya Dubey
+- Eshwari Borade
 
 ---
 
-## 📌 Future Enhancements
+## 📋 Submitted To
 
-* Add CI/CD pipeline using GitHub Actions
-* Integrate automated testing
-* Perform static code analysis
-* Containerize application using Docker
-* Deploy application on cloud platform
-
----
-cd ~/ecommerce-devops-project
-nano README.mdcd ~/ecommerce-devops-project
-nano README.mdcd ~/ecommerce-devops-project
-nano README.md
+**Prof. Prakash Date** | DevOps T1 Mini Project | 25 Marks
