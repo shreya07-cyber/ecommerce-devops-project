@@ -2,4 +2,3 @@ venv/
 demo_ecommerce/venv/
 __pycache__/
 *.pyc
-.env
