@@ -1,6 +1,5 @@
 # 🛒 E-Commerce DevOps Project
 
-![CI/CD](https://github.com/tejalkunde/ecommerce-devops-project/actions/workflows/ci-cd.yml/badge.svg)
 
 ## 📌 Project Description
 
