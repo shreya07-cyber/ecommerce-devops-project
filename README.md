@@ -176,4 +176,4 @@ Pull requests from `dev` → `main` trigger full CI pipeline before merge.
 
 ## 📋 Submitted To
 
-**Prof. Prakash Date** | DevOps T1 Mini Project | 25 Marks
+**Prof. Shipha Pant** | DevOps T1 Mini Project | 25 Marks
